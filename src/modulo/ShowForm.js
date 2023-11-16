@@ -20,7 +20,7 @@ class ShowForm extends Component {
       const headers = {
         Authorization: `Basic ${credentials}`,
       };
-
+      
       const response = await axios.get(
         'https://localhost:7179/api/components',
         { headers }
@@ -30,6 +30,7 @@ class ShowForm extends Component {
         const data = response.data;
         console.log(data);
         this.setState({ htmlContent: data });
+        
       } else {
         console.error('Error al obtener el contenido HTML.');
       }
@@ -68,6 +69,7 @@ class ShowForm extends Component {
           'Content-Type': 'application/json',
         };
         axios.defaults.headers.common = headers;
+        
 
       const response = await axios.post(
         'https://localhost:7179/api/FormData',
@@ -76,6 +78,7 @@ class ShowForm extends Component {
       if (response.status === 200) {
         const data = response.data;
         this.setState({ htmlContent: data });
+        window.location.reload();
       } else {
         console.error('Error al obtener el contenido HTML.');
       }
@@ -113,7 +116,7 @@ class ShowForm extends Component {
 
   render() {
     const { htmlContent, data } = this.state;
-
+    
     return (
       <div>
         <h1>Formulario</h1>
