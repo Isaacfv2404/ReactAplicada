@@ -37,20 +37,21 @@ class ShowForm extends Component {
 
     handleSaveClick = async (event) => {
         event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
-    
+
         try {
             const formData = this.state.formData;
             const componentData = {}; // Objeto para almacenar los datos del formulario
-    
+
             const inputElements = document.querySelectorAll('input[id]');
             inputElements.forEach((input) => {
-                formData.append(input.id, input.value);});
-               
+                formData.append(input.id, input.value);
+            });
+
             // Itera sobre los datos del formulario y construye el objeto JSON
             formData.forEach((value, key) => {
                 componentData[key] = value;
             });
-    
+
             const email = 'isaacfallasv@gmail.com';
             const password = 'ifv123';
             const credentials = btoa(`${email}:${password}`);
@@ -60,9 +61,9 @@ class ShowForm extends Component {
                 'Content-Type': 'application/json'
             };
             axios.defaults.headers.common = headers;
-           
+
             // Envía el objeto componentData como JSON en la solicitud POST
-            const response = await axios.post('https://localhost:7179/api/FormData', componentData );
+            const response = await axios.post('https://localhost:7179/api/FormData', componentData);
             if (response.status === 200) {
                 const data = response.data;
                 this.setState({ htmlContent: data });
@@ -73,7 +74,7 @@ class ShowForm extends Component {
             console.error('Error al obtener el contenido HTML.', error);
         }
     };
-    
+
 
 
     componentDidMount() {
@@ -89,9 +90,49 @@ class ShowForm extends Component {
                 <form className="styled-form" key="uniqueKey" dangerouslySetInnerHTML={{ __html: htmlContent }} />
                 {/* Agrega un botón para guardar los datos */}
                 <button onClick={this.handleSaveClick}>Guardar</button>
+                <div>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Componente</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Campo de Nombre:</td>
+                                <td>____________________</td>
+                            </tr>
+                            <tr>
+                                <td>Opción Masculino:</td>
+                                <td>☐</td>
+                            </tr>
+                            <tr>
+                                <td>Opción Femenino:</td>
+                                <td>☐</td>
+                            </tr>
+                            <tr>
+                                <td>Casilla de Verificación:</td>
+                                <td>☐</td>
+                            </tr>
+                            <tr>
+                                <td>Lista Desplegable:</td>
+                                <td>____________________</td>
+                            </tr>
+                            <tr>
+                                <td>Área de Texto:</td>
+                                <td>____________________</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         );
     }
+
+ 
+    
 }
 
 export default ShowForm;
