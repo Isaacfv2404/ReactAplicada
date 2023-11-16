@@ -20,7 +20,19 @@ export default function AddForm() {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        await axios.post("https://localhost:7179/api/forms/", form)
+
+        const email = 'isaacfallasv@gmail.com';
+        const password = 'ifv123';
+        const credentials = btoa(`${email}:${password}`);
+  
+        const headers = {
+          Authorization: `Basic ${credentials}`,
+          'Content-Type': 'application/json',
+        };
+        axios.defaults.headers.common = headers;
+
+
+        await axios.post("https://localhost:7179/api/Forms", form)
         navigate("/")
     }
 
