@@ -7,12 +7,13 @@ export default function AddForm() {
     let navigate = useNavigate()
 
     const [form, setForm] = useState({
+        id: "",
         descriptionForm: "",
         isEnable: false
         
     })
 
-    const { descriptionForm, isEnable } = form
+    const { id, descriptionForm, isEnable } = form
 
     const onInputChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -43,6 +44,19 @@ export default function AddForm() {
                     <h2 className='text-center m-4'>Agregar Formulario</h2>
                     
                     <form onSubmit={onSubmit}>
+
+                    <div className='mb-3'>
+                            <label htmlFor='id' className='form-label'>Id del Formulario</label>
+                            <input
+                                type='number'
+                                className='form-control'
+                                placeholder='Ingresa una id'
+                                name='id'
+                                value={id}
+                                onChange={onInputChange}
+                            />
+                        </div>
+
                         <div className='mb-3'>
                             <label htmlFor='descriptionForm' className='form-label'>Descripcion del formulario</label>
                             <input
