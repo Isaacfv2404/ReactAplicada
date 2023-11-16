@@ -42,16 +42,15 @@ class ShowForm extends Component {
             const formData = this.state.formData;
             const componentData = {}; // Objeto para almacenar los datos del formulario
     
-            const inputElements = document.querySelectorAll('input[name]');
+            const inputElements = document.querySelectorAll('input[id]');
             inputElements.forEach((input) => {
-                formData.append(input.name, input.value);});
+                formData.append(input.id, input.value);});
                
             // Itera sobre los datos del formulario y construye el objeto JSON
             formData.forEach((value, key) => {
                 componentData[key] = value;
             });
     
-            console.log(componentData);
             const email = 'isaacfallasv@gmail.com';
             const password = 'ifv123';
             const credentials = btoa(`${email}:${password}`);
