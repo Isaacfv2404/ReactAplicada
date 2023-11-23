@@ -17,13 +17,14 @@ export default function AddForm() {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    
-    //Los commponentes de cada formulario
+
+    //Los commponentes de cada formulario....................................................................
+    const [components, setComponents] = useState([]);// el vector de componentes de cada vector
     const [component, setComponent] = useState({
         typeComponentId: "",
         text: '',
         value: '',
-        isVisible: '',
+        isVisible: true,
         isEnable1: true,
         placeHolder: '',
         nameDescription: '',
@@ -39,7 +40,7 @@ export default function AddForm() {
 
 
 
-    //los tipos de componentes
+    //los tipos de componentes.......................................................................
     const [typeComponents, setTypeComponents] = useState([]);
     const loadTypeComponent = async () => {
         try {
@@ -52,6 +53,7 @@ export default function AddForm() {
             };
             axios.defaults.headers.common = headers;
 
+
             const response = await axios.get('https://localhost:7179/api/TypeComponents');
             setTypeComponents(response.data);
         } catch (error) {
@@ -62,6 +64,7 @@ export default function AddForm() {
     useEffect(() => {
         loadTypeComponent();
     }, []);
+
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -82,6 +85,10 @@ export default function AddForm() {
         console.log(formData)
         await axios.post("https://localhost:7179/api/Forms", formData)
         navigate("/")
+
+
+        //agregar los componentes de cada formulario................
+        
     }
 
     return (
@@ -122,13 +129,16 @@ export default function AddForm() {
                     </form>
                 </div>
             </div>
+
+
+
             <div className='components'>
                 <h2>COMPONENTES</h2>
                 <select
                     className="form-control"
-                    name="clientId"
-                    value={descriptionForm}
-                    onChange={(e) => onInputChange(e)}
+                    name="typeComponentId"
+                    value={typeComponentId}
+                    onChange={(e) => onInputChangeComponent(e)}
                 >
                     <option value="">Selecciona un componente</option>
                     {typeComponents.map((comp) => (
