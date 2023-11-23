@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './app.css'
 
+let IdForm = 0;
 export default function AddForm() {
     let navigate = useNavigate()
     const [form, setForm] = useState({
@@ -14,7 +15,7 @@ export default function AddForm() {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    let IdForm = 0;
+    
     //Los commponentes de cada formulario....................................................................
     const [components, setComponents] = useState([]);// el vector de componentes de cada vector
     const [component, setComponent] = useState({
