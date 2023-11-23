@@ -60,7 +60,6 @@ export default function FormsList() {
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Id</th>
               <th scope="col">Descripción de Formulario</th>
               <th scope="col">Estado</th>
               <th scope="col">Modificación</th>
@@ -78,7 +77,7 @@ export default function FormsList() {
               forms.map((formulario, index) => (
                 <tr>
                   <th scope="row" key={index}>{index + 1}</th>
-                  <td>{formulario.id}</td>
+              
                   <td>{formulario.descriptionForm}</td>
                   <td>{formulario.isEnable ? 'Activo' : 'Inactivo'}</td>
 
