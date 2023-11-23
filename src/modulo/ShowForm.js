@@ -16,13 +16,16 @@ class ShowForm extends Component {
       const email = 'isaacfallasv@gmail.com';
       const password = 'ifv123';
       const credentials = btoa(`${email}:${password}`);
+      const params = new URLSearchParams(window.location.search);
+      const idURL = params.get('id');
 
       const headers = {
         Authorization: `Basic ${credentials}`,
       };
       
+      
       const response = await axios.get(
-        'https://localhost:7179/api/components',
+        `https://localhost:7179/api/components/${idURL}`,
         { headers }
       );
 
