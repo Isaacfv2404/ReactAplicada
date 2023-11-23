@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './app.css'
 
@@ -17,6 +17,27 @@ export default function AddForm() {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
+    
+    //Los commponentes de cada formulario
+    const [component, setComponent] = useState({
+        typeComponentId: "",
+        text: '',
+        value: '',
+        isVisible: '',
+        isEnable1: true,
+        placeHolder: '',
+        nameDescription: '',
+        formId: '',
+        componentNameId:'',
+    })
+
+    const {typeComponentId,text,value,isVisible,isEnable1,placeHolder,nameDescription,formId,componentNameId } = component
+
+    const onInputChangeComponent = (e) => {
+        setComponent({ ...component, [e.target.name]: e.target.value })
+    }
+
+
 
     //los tipos de componentes
     const [typeComponents, setTypeComponents] = useState([]);
@@ -30,7 +51,7 @@ export default function AddForm() {
                 'Content-Type': 'application/json',
             };
             axios.defaults.headers.common = headers;
-    
+
             const response = await axios.get('https://localhost:7179/api/TypeComponents');
             setTypeComponents(response.data);
         } catch (error) {
@@ -40,7 +61,7 @@ export default function AddForm() {
 
     useEffect(() => {
         loadTypeComponent();
-      }, []);
+    }, []);
 
     const onSubmit = async (e) => {
         e.preventDefault()
