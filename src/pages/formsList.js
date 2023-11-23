@@ -92,8 +92,6 @@ export default function FormsList() {
                   <td>
                     <Link to={`/ShowForm?id=${formulario.id}`} className='btn btn-danger mx-2'>Ver</Link>
                   </td>
-
-
                 </tr>
               ))
             }

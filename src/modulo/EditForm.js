@@ -25,11 +25,38 @@ export default function EditForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    await axios.put(`https://localhost:7179/api/forms/${id}`, form)
+
+    const email = 'isaacfallasv@gmail.com';
+    const password = 'ifv123';
+    const credentials = btoa(`${email}:${password}`);
+
+    const headers = {
+      Authorization: `Basic ${credentials}`,
+      'Content-Type': 'application/json',
+    };
+    axios.defaults.headers.common = headers;
+
+    const formData = {
+      id:id,
+      descriptionForm: descriptionForm,
+      isEnable: JSON.parse(isEnable),
+  }
+    console.log(formData);
+    await axios.put(`https://localhost:7179/api/forms/${id}`, formData)
     navigate('/')
   }
 
   const loadForm = async () => {
+    const email = 'isaacfallasv@gmail.com';
+    const password = 'ifv123';
+    const credentials = btoa(`${email}:${password}`);
+
+    const headers = {
+      Authorization: `Basic ${credentials}`,
+      'Content-Type': 'application/json',
+    };
+    axios.defaults.headers.common = headers;
+
     const result = await axios.get(`https://localhost:7179/api/forms/${id}`)
     setForm(result.data)
   }
@@ -65,7 +92,7 @@ export default function EditForm() {
             </div>
            
             <button type='submit' className='btn btn-outline-primary'>
-              Submit
+              Modificar
             </button>
             <Link className='btn btn-outline-danger mx-2' to='/'>
               Cancel
