@@ -46,38 +46,58 @@ class ShowForm extends Component {
     event.preventDefault();
 
     try {
-        const formData = this.state.formData;
-        const params = new URLSearchParams(window.location.search);
-        const id = params.get('id');
-        
-        const componentData = {}; // Objeto para almacenar los datos del formulario
-        const inputElements = document.querySelectorAll('input[id]');
-        inputElements.forEach((input) => {
-          formData.append(input.id, input.value);
+      const formData = this.state.formData;
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+    
+      const componentData = {}; // Objeto para almacenar los datos del formulario
+    
+      // Recopila datos de las casillas de entrada
+      const inputElements = document.querySelectorAll('input[id]');
+      inputElements.forEach((input) => {
+        formData.append(input.id, input.value);
+      });
+    
+      // Recopila datos de las casillas de textarea si existen
+      const textareaElements = document.querySelectorAll('textarea[id]');
+      if (textareaElements) {
+        textareaElements.forEach((textarea) => {
+          formData.append(textarea.id, textarea.value);
         });
-  
-        // Itera sobre los datos del formulario y construye el objeto JSON
-        formData.forEach((value, key) => {
-          componentData[key] = value;
+      }
+    
+      // Recopila datos de las casillas de select si existen
+      const selectElements = document.querySelectorAll('select[id]');
+      if (selectElements) {
+        selectElements.forEach((select) => {
+          formData.append(select.id, select.value);
         });
-       
-        componentData['idForm'] = id;
-  
-        const email = 'isaacfallasv@gmail.com';
-        const password = 'ifv123';
-        const credentials = btoa(`${email}:${password}`);
-  
-        const headers = {
-          Authorization: `Basic ${credentials}`,
-          'Content-Type': 'application/json',
-        };
-        axios.defaults.headers.common = headers;
-        
-
+      }
+    
+      // Itera sobre los datos del formulario y construye el objeto JSON
+      formData.forEach((value, key) => {
+        componentData[key] = value;
+      });
+    
+      componentData['idForm'] = id;
+    
+      const email = 'isaacfallasv@gmail.com';
+      const password = 'ifv123';
+      const credentials = btoa(`${email}:${password}`);
+    
+      const headers = {
+        Authorization: `Basic ${credentials}`,
+        'Content-Type': 'application/json',
+      };
+      axios.defaults.headers.common = headers;
+    
       const response = await axios.post(
         'https://localhost:7179/api/FormData',
         componentData
       );
+
+      console.log(response);
+
       if (response.status === 200) {
         const data = response.data;
         this.setState({ htmlContent: data });
