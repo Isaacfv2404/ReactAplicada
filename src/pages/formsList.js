@@ -83,7 +83,7 @@ export default function FormsList() {
 
 
                   <td>
-                    <Link to={`/EditForm?id=${formulario.id}`} className='btn btn-outline-primary mx-2'>Modificar</Link>
+                    <Link to={`/FormComponent?id=${formulario.id}`} className='btn btn-outline-primary mx-2'>Modificar</Link>
                   </td>
                   <td>
                     <Link to={`/DeleteForm?id=${formulario.id}`} className='btn btn-danger mx-2'>Eliminar</Link>

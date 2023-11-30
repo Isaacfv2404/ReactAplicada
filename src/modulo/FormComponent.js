@@ -27,6 +27,7 @@ export default function FormComponent() {
     const onInputChangeComponent = (e) => {
         setComponent({ ...component, [e.target.name]: e.target.value })
     }
+
     //los tipos de componentes.......................................................................
     const [typeComponents, setTypeComponents] = useState([]);
     const loadTypeComponent = async () => {
@@ -48,8 +49,38 @@ export default function FormComponent() {
         }
     };
 
+
+    //obtiene los html, si existen
+    // Función para obtener el nombre del typeComponent basado en el typeComponentId
+    const getTypeComponentName = (typeComponentId) => {
+        const foundTypeComponent = typeComponents.find(tc => tc.id === typeComponentId);
+        return foundTypeComponent ? foundTypeComponent.nameComponent : 'Desconocido';
+    };
+    const [componentsHTML, setComponentsHTML] = useState([]);
+    const loadHtmlContent = async () => {
+        try {
+            const email = 'isaacfallasv@gmail.com';
+            const password = 'ifv123';
+            const credentials = btoa(`${email}:${password}`);
+            const params = new URLSearchParams(window.location.search);
+            const idURL = params.get('id');
+
+            const headers = {
+                Authorization: `Basic ${credentials}`,
+            };
+
+
+            const response = await axios.get(`https://localhost:7179/api/components/formComponents/${idURL}`, { headers });
+            setComponentsHTML(response.data);
+        } catch (error) {
+            console.error('Error al cargar los componentes:', error);
+        }
+    };
+
+
     useEffect(() => {
         loadTypeComponent();
+        loadHtmlContent();
     }, []);
 
     const onSubmit = async (e) => {
@@ -164,6 +195,29 @@ export default function FormComponent() {
                 </form>
 
             </div >
+
+
+
+            <div>
+                <h2>Tabla de Componentes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {componentsHTML.map(component => (
+                            <tr key={component.id}>
+                                <td>{getTypeComponentName(component.typeComponentId)}</td>
+                                <td>{component.text}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     )
 }
