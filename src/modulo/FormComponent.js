@@ -139,7 +139,7 @@ export default function FormComponent() {
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="nameDescription" className="form-label"> NameDescripción</label>
+                        <label htmlFor="nameDescription" className="form-label"> Titulo</label>
                         <input
                             type="text"
                             className="form-control"
