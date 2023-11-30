@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
-/*
-Al importar axios de la biblioteca, 
-estás agregando la funcionalidad necesaria 
-no necesariamente para realizar solicitudes HTTP, como GET, POST, PUT, DELETE, etc
-*/
 import axios from "axios"
 
-/*
-Link se utiliza para crear enlaces entre diferentes rutas en la aplicación. 
-Permite al usuario hacer clic en un enlace y cambiar 
-la URL del navegador sin recargar la página completa.
-*/
-import { Link, useParams } from 'react-router-dom'
+import { Link, redirect, useParams, useNavigate } from 'react-router-dom'
 
+import updateFormStatus from '../service/FormService'
 export default function FormsList() {
 
   /**
    * Es un arreglo llamado users que guarda un json con los datos
    * del cliente recibido
    */
+  let navigate = useNavigate()
   const [forms, setForms] = useState([])
 
   /*
@@ -30,14 +23,11 @@ export default function FormsList() {
     loadForms();
   }, [])
 
-  /*
-  Metodo que recibe un json del springboot
-  lo guarda en users. y lo tiene como una lista
-  */
-  const email = 'isaacfallasv@gmail.com';
-  const password = 'ifv123';
+
 
   const loadForms = async () => {
+    const email = 'isaacfallasv@gmail.com';
+    const password = 'ifv123';
     const credentials = btoa(`${email}:${password}`); // Codificar credenciales en base64
     const headers = {
       'Authorization': `Basic ${credentials}`
@@ -50,6 +40,31 @@ export default function FormsList() {
       // Manejar errores aquí
       console.error('Error al cargar los formularios:', error);
     }
+  };
+
+  const handleDelete = async (id, descripcion) => {
+
+    console.log(id);
+
+    Swal.fire({
+      title: "¿Estas seguro?",
+      text: "!No podras revertirlo!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "!Si, eliminar!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updateFormStatus(id, descripcion);
+        Swal.fire({
+          title: "!Eliminado!",
+          text: "El formulario fue eliminado",
+          icon: "success"
+        });
+        window.location.reload();
+      }
+    });
   };
 
 
@@ -74,10 +89,10 @@ export default function FormsList() {
               Recorre la lista del JSON
               y las coloca en la lista
               */
-              forms.map((formulario, index) => (
+              forms.filter(formulario => formulario.isEnable).map((formulario, index) => (
                 <tr>
                   <th scope="row" key={index}>{index + 1}</th>
-              
+
                   <td>{formulario.descriptionForm}</td>
                   <td>{formulario.isEnable ? 'Activo' : 'Inactivo'}</td>
 
@@ -86,11 +101,15 @@ export default function FormsList() {
                     <Link to={`/FormComponent?id=${formulario.id}`} className='btn btn-outline-primary mx-2'>Modificar</Link>
                   </td>
                   <td>
-                    <Link to={`/DeleteForm?id=${formulario.id}`} className='btn btn-danger mx-2'>Eliminar</Link>
+                    <button onClick={() => handleDelete(formulario.id, formulario.descriptionForm)} className='btn btn-danger mx-2'>
+                      Eliminar
+                    </button>
                   </td>
+
                   <td>
                     <Link to={`/ShowForm?id=${formulario.id}`} className='btn btn-danger mx-2'>Ver</Link>
                   </td>
+
                 </tr>
               ))
             }

@@ -37,7 +37,7 @@ export default function EditForm() {
     axios.defaults.headers.common = headers;
 
     const formData = {
-      id:id,
+      id: id,
       descriptionForm: descriptionForm,
       isEnable: JSON.parse(isEnable),
   }
