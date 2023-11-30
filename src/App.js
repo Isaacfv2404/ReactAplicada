@@ -6,6 +6,7 @@ import AddForm from './modulo/AddForm';
 import DeleteForm from './modulo/DeleteForm';
 import EditForm from './modulo/EditForm';
 import ShowForm from './modulo/ShowForm';
+import FormComponent from './modulo/FormComponent';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/AddForm" element={<AddForm/>}/>
         <Route exact path="/DeleteForm" element={<DeleteForm/>}/>
         <Route exact path="/EditForm" element={<EditForm/>}/>
+        <Route exact path='/FormComponent' element={<FormComponent/>}/>
         
       </Routes>
 
