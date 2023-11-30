@@ -6,6 +6,7 @@ import axios from "axios"
 import { Link, redirect, useParams, useNavigate } from 'react-router-dom'
 
 import updateFormStatus from '../service/FormService'
+import { wait } from '@testing-library/user-event/dist/utils'
 export default function FormsList() {
 
   /**
@@ -62,6 +63,7 @@ export default function FormsList() {
           text: "El formulario fue eliminado",
           icon: "success"
         });
+        wait(10000);
         window.location.reload();
       }
     });
