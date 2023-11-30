@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './app.css'
+import { SuccessAlert } from '../alerts/alerts';
 
 let IdForm = 0;
 export default function FormComponent() {
@@ -78,6 +79,7 @@ export default function FormComponent() {
         }
         console.log(componentData)
         const response = await axios.post("https://localhost:7179/api/Components", componentData)
+        SuccessAlert('Componente agregado correctamente');
 
     }
 
